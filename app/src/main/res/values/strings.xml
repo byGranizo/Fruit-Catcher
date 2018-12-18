@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FruitCatcher</string>
+
+    <string name="logo">Logo</string>
 </resources>
