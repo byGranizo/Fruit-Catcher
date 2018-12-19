@@ -24,6 +24,25 @@ public class StartActivity extends AppCompatActivity {
         initUI();
     }
 
+    //Executed when user touch de Start Button
+    public void startButton(View v){
+        ivLogo.setVisibility(View.INVISIBLE);
+        btStart.setVisibility(View.INVISIBLE);
+        btEasy.setVisibility(View.VISIBLE);
+        btHard.setVisibility(View.VISIBLE);
+    }
+
+    //Executed when user touch de Easy Difficulty Button
+    public void easyButton(View v){
+        launchGameActivity(false);
+    }
+
+    //Executed when user touch de Hard Difficulty Button
+    public void hardButton(View v){
+        launchGameActivity(true);
+    }
+
+    //Hide the Android UI to execute the game in fullscreen
     private void hideUI(){
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
@@ -35,21 +54,7 @@ public class StartActivity extends AppCompatActivity {
         );
     }
 
-    public void startButton(View v){
-        ivLogo.setVisibility(View.INVISIBLE);
-        btStart.setVisibility(View.INVISIBLE);
-        btEasy.setVisibility(View.VISIBLE);
-        btHard.setVisibility(View.VISIBLE);
-    }
-
-    public void easyButton(View v){
-        launchGameActivity(false);
-    }
-
-    public void hardButton(View v){
-        launchGameActivity(true);
-    }
-
+    //Initialize the game UI
     private void initUI(){
         ivLogo = findViewById(R.id.ivLogo);
         btStart = findViewById(R.id.btStart);
@@ -57,11 +62,14 @@ public class StartActivity extends AppCompatActivity {
         btHard = findViewById(R.id.btHard);
     }
 
+    //Launch the game activity when difficulty is selected
     public void launchGameActivity(Boolean difficulty){
         Intent game = new Intent(this, GameActivity.class);
         game.putExtra("difficulty",difficulty);
+        startActivity(game);
     }
 
+    //When user returns to the activity
     @Override
     protected void onResume() {
         super.onResume();
