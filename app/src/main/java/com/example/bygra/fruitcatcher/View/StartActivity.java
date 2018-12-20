@@ -17,7 +17,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__inicio);
+        setContentView(R.layout.activity_start);
 
         hideUI();
 
@@ -75,4 +75,6 @@ public class StartActivity extends AppCompatActivity {
         super.onResume();
         hideUI();
     }
+
+
 }

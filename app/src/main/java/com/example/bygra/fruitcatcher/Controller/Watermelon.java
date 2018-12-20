@@ -10,7 +10,7 @@ public class Watermelon extends Food {
 
     public Watermelon(Context context, Point position) {
         super(context, position);
-        this.setBitmap(BitmapFactory.decodeResource(this.getContext().getResources(),R.drawable.entity_tomatoe));
+        this.setBitmap(BitmapFactory.decodeResource(this.getContext().getResources(),R.drawable.entity_watermelon));
         setLifeLose(false);
         setScore(10);
     }

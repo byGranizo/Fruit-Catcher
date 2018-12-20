@@ -2,4 +2,5 @@
     <string name="app_name">FruitCatcher</string>
 
     <string name="logo">Logo</string>
+    <string name="score">Score:</string>
 </resources>

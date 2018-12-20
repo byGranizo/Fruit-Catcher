@@ -10,7 +10,7 @@ public class FriedEgg extends Food {
 
     public FriedEgg(Context context, Point position) {
         super(context, position);
-        this.setBitmap(BitmapFactory.decodeResource(this.getContext().getResources(),R.drawable.entity_tomatoe));
+        this.setBitmap(BitmapFactory.decodeResource(this.getContext().getResources(),R.drawable.entity_friedegg));
         setLifeLose(true);
         setScore(0);
     }

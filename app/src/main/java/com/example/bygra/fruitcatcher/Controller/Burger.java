@@ -10,7 +10,7 @@ public class Burger extends Food {
 
     public Burger(Context context, Point position) {
         super(context, position);
-        this.setBitmap(BitmapFactory.decodeResource(this.getContext().getResources(),R.drawable.entity_tomatoe));
+        this.setBitmap(BitmapFactory.decodeResource(this.getContext().getResources(),R.drawable.entity_burger));
         setLifeLose(true);
         setScore(0);
     }
