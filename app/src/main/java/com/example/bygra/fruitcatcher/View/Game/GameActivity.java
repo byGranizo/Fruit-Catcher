@@ -1,4 +1,4 @@
-package com.example.bygra.fruitcatcher.View;
+package com.example.bygra.fruitcatcher.View.Game;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

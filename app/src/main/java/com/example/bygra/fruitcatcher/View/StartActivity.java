@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.bygra.fruitcatcher.R;
+import com.example.bygra.fruitcatcher.View.Game.GameActivity;
 
 public class StartActivity extends AppCompatActivity {
 

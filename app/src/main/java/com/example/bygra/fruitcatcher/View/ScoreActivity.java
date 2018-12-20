@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.bygra.fruitcatcher.R;
+import com.example.bygra.fruitcatcher.View.Game.GameActivity;
 
 public class ScoreActivity extends AppCompatActivity {
 
