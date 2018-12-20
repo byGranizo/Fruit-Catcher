@@ -1,12 +1,15 @@
-package com.example.bygra.fruitcatcher.Controller;
+package com.example.bygra.fruitcatcher.Controller.Entities;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.view.Display;
+import android.view.WindowManager;
 
 public class Food {
 
     private Context context;
+    private Point size;
     private Point position;
     private Bitmap bitmap;
     private Boolean lifeLose;
@@ -23,6 +26,14 @@ public class Food {
 
     public void setContext(Context context) {//creo que se puede eliminar
         this.context = context;
+    }
+
+    public Point getSize() {
+        return size;
+    }
+
+    public void setSize(Point size) {
+        this.size = size;
     }
 
     public Point getPosition() {
@@ -55,6 +66,16 @@ public class Food {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    //Get the screen size in pixels
+    protected Point getScreenSize(){
+        Point screenSize = new Point();
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display d = wm.getDefaultDisplay();
+        d.getRealSize(screenSize);
+        return screenSize;
     }
 }
 
