@@ -29,8 +29,8 @@ public class GameObjects {
 
     Bitmap background;
 
-    protected Basket basket;
-    protected ArrayList<Food> foodList;
+    public Basket basket;
+    public ArrayList<Food> foodList;
 
     public GameObjects(Context context) {
         this.context = context;
@@ -84,10 +84,20 @@ public class GameObjects {
         return p;
     }
     //Get the screen size in pixels
-    private void getScreenSize(){
+    public void getScreenSize(){
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display d = wm.getDefaultDisplay();
         d.getRealSize(screenSize);
         System.out.println(screenSize.x + " - " + screenSize.y);
+    }
+
+    public void setBasketX(int x){
+        Point location = basket.getLocation();
+        location.x = x;
+        basket.setLocation(location);
+    }
+
+    public Basket getBasket() {
+        return basket;
     }
 }
