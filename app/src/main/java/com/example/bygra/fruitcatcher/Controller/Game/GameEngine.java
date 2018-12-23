@@ -7,10 +7,13 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
+import java.util.Random;
+
 public class GameEngine {
 
     Context context;
     GameObjects gameObjects;
+    Point screen;
 
     MotionEvent cursor;
     boolean basketMove = false;
@@ -20,6 +23,7 @@ public class GameEngine {
     public GameEngine(Context context, Boolean difficulty) {
         this.context = context;
         gameObjects = new GameObjects(context);
+        screen = getScreenSize();
         this.difficulty = difficulty;
     }
 
@@ -41,20 +45,46 @@ public class GameEngine {
 
     public void update(){
         moveBasket();
+
+        Random r = new Random();
+        int spawnFood = r.nextInt(30);
+        if(spawnFood == 0){
+            gameObjects.newFood();
+        }
+
+        moveFood();
+
+        deleteFood();
+
+        System.out.println(gameObjects.foodList.size());
     }
 
     public void onDraw(Canvas canvas){
         //Draw background
         canvas.drawBitmap(gameObjects.background, 0, 0, null);
+
+        //Draw fruits
+        for(int i=0;i<gameObjects.foodList.size();i++){
+            canvas.drawBitmap(gameObjects.foodList.get(i).getBitmap(),gameObjects.foodList.get(i).getLocation().x,gameObjects.foodList.get(i).getLocation().y,null);
+        }
+
         //Draw basket
         canvas.drawBitmap(gameObjects.basket.getBitmap(),gameObjects.basket.getLocation().x,gameObjects.basket.getLocation().y, null);
     }
 
+    public Point getScreenSize(){
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display d = wm.getDefaultDisplay();
+        Point screenSize = new Point();
+        d.getRealSize(screenSize);
+
+        return screenSize;
+    }
+
     public void moveBasketLeft(){
-        Point screen = getScreenSize();
         Point location = gameObjects.basket.getLocation();
 
-        location.x -= screen.x*0.02;
+        location.x -= screen.x*0.015;
         if(location.x < 0){
             location.x = 0;
         }
@@ -62,10 +92,9 @@ public class GameEngine {
     }
 
     public void moveBasketRight(){
-        Point screen = getScreenSize();
         Point location = gameObjects.basket.getLocation();
 
-        location.x += screen.x*0.02;
+        location.x += screen.x*0.015;
         if(location.x > screen.x-gameObjects.basket.getSize().x){
             location.x = screen.x-gameObjects.basket.getSize().x;
         }
@@ -85,12 +114,38 @@ public class GameEngine {
         }
     }
 
-    public Point getScreenSize(){
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display d = wm.getDefaultDisplay();
-        Point screenSize = new Point();
-        d.getRealSize(screenSize);
+    public void moveFood(){
+        double velocity;
+        if(difficulty){
+            velocity = 0.015;
+        } else {
+            velocity = 0.01;
+        }
 
-        return screenSize;
+        for(int i=0;i<gameObjects.foodList.size();i++){
+            Point location = gameObjects.foodList.get(i).getLocation();
+            location.y += screen.y*velocity;
+            gameObjects.foodList.get(i).setLocation(location);
+        }
     }
+
+    public void deleteFood(){
+
+        for(int i=0;i<gameObjects.foodList.size();i++){
+            //Delete the object when it goes out of the screen
+            if(gameObjects.foodList.get(i).getLocation().y > screen.y){
+                gameObjects.foodList.remove(i);
+            }
+            //Delete the object when it collides with the basket
+            if((gameObjects.foodList.get(i).getLocation().y + gameObjects.foodList.get(i).getSize().y >= gameObjects.basket.getLocation().y)
+                    || (gameObjects.foodList.get(i).getLocation().y >= gameObjects.basket.getLocation().y + gameObjects.basket.getSize().y)){
+                if((gameObjects.foodList.get(i).getLocation().x + gameObjects.foodList.get(i).getSize().x > gameObjects.basket.getLocation().x)
+                        && (gameObjects.foodList.get(i).getLocation().x < gameObjects.basket.getLocation().x + gameObjects.basket.getSize().x)){
+                    gameObjects.foodList.remove(i);
+                }
+            }
+        }
+    }
+
+
 }

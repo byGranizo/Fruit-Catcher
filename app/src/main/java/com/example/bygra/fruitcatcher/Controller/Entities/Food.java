@@ -10,14 +10,14 @@ public class Food {
 
     private Context context;
     private Point size;
-    private Point position;
+    private Point location;
     private Bitmap bitmap;
     private Boolean lifeLose;
     private int score;
 
-    public Food(Context context, Point position) {
+    public Food(Context context, Point location) {
         this.context = context;
-        this.position = position;
+        this.location = location;
     }
 
     public Context getContext() {
@@ -36,12 +36,12 @@ public class Food {
         this.size = size;
     }
 
-    public Point getPosition() {
-        return position;
+    public Point getLocation() {
+        return location;
     }
 
-    public void setPosition(Point position) {
-        this.position = position;
+    public void setLocation(Point location) {
+        this.location = location;
     }
 
     public Bitmap getBitmap() {

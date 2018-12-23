@@ -12,8 +12,8 @@ public class Burger extends Food {
     public Burger(Context context, Point position) {
         super(context, position);
 
-        setBitmap(resizedBitmap());
         setSize(setFoodSize());
+        setBitmap(resizedBitmap());
 
         setLifeLose(true);
         setScore(0);
@@ -22,8 +22,8 @@ public class Burger extends Food {
     private Point setFoodSize(){
         Point size = getScreenSize();
 
-        size.x *= 0.05;
-        size.y *= 0.05;
+        size.x *= 0.15;
+        size.y *= 0.1;
 
         return size;
     }

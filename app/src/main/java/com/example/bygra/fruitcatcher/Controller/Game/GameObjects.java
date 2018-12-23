@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
-import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -14,7 +13,7 @@ import com.example.bygra.fruitcatcher.Controller.Entities.Food;
 import com.example.bygra.fruitcatcher.Controller.Entities.FriedEgg;
 import com.example.bygra.fruitcatcher.Controller.Entities.HotDog;
 import com.example.bygra.fruitcatcher.Controller.Entities.Onion;
-import com.example.bygra.fruitcatcher.Controller.Entities.Tomatoe;
+import com.example.bygra.fruitcatcher.Controller.Entities.Tomato;
 import com.example.bygra.fruitcatcher.Controller.Entities.Watermelon;
 import com.example.bygra.fruitcatcher.R;
 
@@ -25,12 +24,14 @@ public class GameObjects {
 
     Context context;
     Point screenSize = new Point();
-    int spawnFoodY = -1 ;
+    int spawnFoodY = -100 ;
+
+    boolean debug = true;
 
     Bitmap background;
 
     public Basket basket;
-    public ArrayList<Food> foodList;
+    public ArrayList<Food> foodList = new ArrayList<>();
 
     public GameObjects(Context context) {
         this.context = context;
@@ -51,6 +52,7 @@ public class GameObjects {
     //Create a random food type
     public void newFood(){
         Point p = randomFoodSpawnPoint();
+
         Random r = new Random();
         int foodIndex = r.nextInt(6)+1;
 
@@ -68,7 +70,7 @@ public class GameObjects {
                 foodList.add(new Onion(context,p));
                 break;
             case 5:
-                foodList.add(new Tomatoe(context,p));
+                foodList.add(new Tomato(context,p));
                 break;
             case 6:
                 foodList.add(new Watermelon(context,p));
@@ -81,6 +83,10 @@ public class GameObjects {
 
         Point p = new Point(r.nextInt(screenSize.x),spawnFoodY);
 
+        if(p.x > screenSize.x * 0.9){
+            p.x =(int) (screenSize.x * 0.9);
+        }
+
         return p;
     }
     //Get the screen size in pixels
@@ -89,15 +95,5 @@ public class GameObjects {
         Display d = wm.getDefaultDisplay();
         d.getRealSize(screenSize);
         System.out.println(screenSize.x + " - " + screenSize.y);
-    }
-
-    public void setBasketX(int x){
-        Point location = basket.getLocation();
-        location.x = x;
-        basket.setLocation(location);
-    }
-
-    public Basket getBasket() {
-        return basket;
     }
 }

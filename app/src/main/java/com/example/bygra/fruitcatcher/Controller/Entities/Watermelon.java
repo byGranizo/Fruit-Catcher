@@ -22,8 +22,8 @@ public class Watermelon extends Food {
     private Point setFoodSize(){
         Point size = getScreenSize();
 
-        size.x *= 0.05;
-        size.y *= 0.05;
+        size.x *= 0.20;
+        size.y *= 0.15;
 
         return size;
     }
