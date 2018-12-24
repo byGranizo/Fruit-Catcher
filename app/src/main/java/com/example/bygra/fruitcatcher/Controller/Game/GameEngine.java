@@ -1,11 +1,17 @@
 package com.example.bygra.fruitcatcher.Controller.Game;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+
+import com.example.bygra.fruitcatcher.View.Game.GameActivity;
+import com.example.bygra.fruitcatcher.View.ScoreActivity;
 
 import java.util.Random;
 
@@ -19,6 +25,9 @@ public class GameEngine {
     boolean basketMove = false;
 
     Boolean difficulty;
+
+    int score = 0;
+    int life = 3;
 
     public GameEngine(Context context, Boolean difficulty) {
         this.context = context;
@@ -56,7 +65,9 @@ public class GameEngine {
 
         deleteFood();
 
-        System.out.println(gameObjects.foodList.size());
+        if(life == 0){
+            gameOver();
+        }
     }
 
     public void onDraw(Canvas canvas){
@@ -70,8 +81,17 @@ public class GameEngine {
 
         //Draw basket
         canvas.drawBitmap(gameObjects.basket.getBitmap(),gameObjects.basket.getLocation().x,gameObjects.basket.getLocation().y, null);
-    }
 
+        //Draw score
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(60);
+        canvas.drawText("Score: " + Integer.toString(score),20,60,paint);
+
+        //Draw lifes
+        canvas.drawText("Life: " + Integer.toString(life),900,60,paint);
+    }
+    //Get the screen size in pixels
     public Point getScreenSize(){
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display d = wm.getDefaultDisplay();
@@ -100,7 +120,7 @@ public class GameEngine {
         }
         gameObjects.basket.setLocation(location);
     }
-
+    //If the screen is pressed moves the screen
     public void moveBasket(){
         if(basketMove){
             int x = (int)cursor.getX();
@@ -113,7 +133,7 @@ public class GameEngine {
             }
         }
     }
-
+    //Each frame moves the food
     public void moveFood(){
         double velocity;
         if(difficulty){
@@ -130,22 +150,33 @@ public class GameEngine {
     }
 
     public void deleteFood(){
-
         for(int i=0;i<gameObjects.foodList.size();i++){
             //Delete the object when it goes out of the screen
             if(gameObjects.foodList.get(i).getLocation().y > screen.y){
                 gameObjects.foodList.remove(i);
+                return;
             }
-            //Delete the object when it collides with the basket
+            //Delete the object when it collides with the basket, if its a
             if((gameObjects.foodList.get(i).getLocation().y + gameObjects.foodList.get(i).getSize().y >= gameObjects.basket.getLocation().y)
                     || (gameObjects.foodList.get(i).getLocation().y >= gameObjects.basket.getLocation().y + gameObjects.basket.getSize().y)){
                 if((gameObjects.foodList.get(i).getLocation().x + gameObjects.foodList.get(i).getSize().x > gameObjects.basket.getLocation().x)
                         && (gameObjects.foodList.get(i).getLocation().x < gameObjects.basket.getLocation().x + gameObjects.basket.getSize().x)){
+
+                    score += gameObjects.foodList.get(i).getScore();
+                    if(gameObjects.foodList.get(i).getLifeLose()){
+                        life--;
+                    }
                     gameObjects.foodList.remove(i);
+                    return;
                 }
             }
         }
     }
 
+    public void gameOver(){
+        Intent game = new Intent(context, ScoreActivity.class);
+        game.putExtra("difficulty",difficulty);
+        context.startActivity(game);
+    }
 
 }
