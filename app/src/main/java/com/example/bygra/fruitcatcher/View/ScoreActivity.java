@@ -14,7 +14,7 @@ public class ScoreActivity extends AppCompatActivity {
     TextView tvScore;
     Boolean difficulty;
 
-    int points;
+    int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +23,10 @@ public class ScoreActivity extends AppCompatActivity {
 
         tvScore = findViewById(R.id.tvUserPoints);
 
-        points = getIntent().getExtras().getInt("score");
+        score = getIntent().getExtras().getInt("score");
         difficulty = getIntent().getExtras().getBoolean("difficulty");
 
-        tvScore.setText(points + "pts");
+        tvScore.setText(score + " pts");
 
     }
 

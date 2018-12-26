@@ -176,6 +176,7 @@ public class GameEngine {
     public void gameOver(){
         Intent game = new Intent(context, ScoreActivity.class);
         game.putExtra("difficulty",difficulty);
+        game.putExtra("score",score);
         context.startActivity(game);
     }
 
